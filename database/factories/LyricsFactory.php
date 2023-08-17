@@ -24,7 +24,7 @@ class LyricsFactory extends Factory
             'date_sortie' => now(),
             'verifier' => fake()->numberBetween(0,1),
             'video' => fake()->url(),
-            'user_id' => User::factory()
+            'user_id' => fake()->numberBetween(1,21)
         ];
     }
 }

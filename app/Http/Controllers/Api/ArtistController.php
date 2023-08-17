@@ -5,13 +5,24 @@ namespace App\Http\Controllers\Api;
 use App\Models\Artist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SearchRequest;
 use App\Http\Requests\ArtistStoreRequest;
 
 class ArtistController extends Controller
 {
     // * get all artists data
-    public function index(){
-        $artists = Artist::all();
+    public function index(SearchRequest $request){
+        $artists = Artist::with('lyrics');
+
+        if($request->validated('nom')){
+            $artists->where('nom', 'like', "%{$request->validated('nom')}%");
+        }
+
+        if($request->validated('genre_musical')){
+            $artists->where('genre_musical', 'like', "%{$request->validated('genre_musical')}%");
+        }
+
+        $artists = $artists->get();
 
         if ($artists->count() > 0) {
             $data = $artists;

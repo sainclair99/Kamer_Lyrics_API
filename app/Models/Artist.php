@@ -45,9 +45,6 @@ class Artist extends Model
         'user_id'
     ];
 
-    protected $casts = [
-        'reseaux_sociaux' => 'array'
-    ];
 
     public function alias() : BelongsTo {
         return $this->belongsTo(User::class, 'user_id');

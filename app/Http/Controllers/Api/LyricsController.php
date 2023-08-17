@@ -9,13 +9,21 @@ use App\Models\Lyrics;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SearchRequest;
 use App\Http\Requests\LyricsStoreRequest;
 
 class LyricsController extends Controller
 {
     // * get all lyrics data
-    public function index(){
-        $lyrics = Lyrics::with('authors')->get();
+    public function index(SearchRequest $request){
+        $lyrics = Lyrics::withAllInfos()->withCount('likes');
+
+        if ($request->validated('titre')) {
+            $lyrics->includeString($request->validated('titre'));
+        }
+
+        $lyrics = $lyrics->get();
+
         if ($lyrics->count() > 0) {
             $data = $lyrics;
             return response()->json($data, 200);

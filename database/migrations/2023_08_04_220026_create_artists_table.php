@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('reseaux_sociaux');
             $table->string('biograhie');
             $table->boolean('est_utilisateur')->default(false);
-            $table->foreignId('user_id')->unique()->references('id')->on('users')->contrained();
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->contrained();
             $table->timestamps();
         });
     }

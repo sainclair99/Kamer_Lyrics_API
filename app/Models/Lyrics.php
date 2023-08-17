@@ -117,7 +117,33 @@ class Lyrics extends Model
         $query->where('verifier', 1);
     }
 
-    // public function scopeWithTwoLike(Builder $query){
-    //     $query->where(, '>=', 2);
-    // } 
+    public function scopeWithAuthors(Builder $query){
+        $query->with('authors');
+    }
+
+    public function scopeWithComments(Builder $query){
+        $query->with('comments');
+    }
+
+    public function scopeWithLikes(Builder $query){
+        $query->with('likes');
+    }
+
+    public function scopeWithTranslations(Builder $query){
+        $query->with('translations');
+    }
+
+    public function scopeWithGenres(Builder $query){
+        $query->with('genres');
+    }
+
+    public function scopeWithAllInfos(Builder $query){
+        $query->withAuthors()->withComments()->withLikes()->withTranslations()->withGenres();
+    }
+
+    public function scopeIncludeString(Builder $query, String $str){
+        $query->where('titre', 'like', "%{$str}%");
+    }
+
+
 }

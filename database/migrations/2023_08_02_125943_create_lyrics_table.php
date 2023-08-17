@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('titre');
             $table->string('status');
             $table->boolean('verifier')->default(false);
-            $table->string('contenu')->unique();
+            $table->string('contenu');
             $table->dateTime('date_sortie')->nullable();
             $table->string('video')->nullable();
             $table->timestamps();
