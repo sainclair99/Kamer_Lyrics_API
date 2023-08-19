@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArticleStoreRequest extends FormRequest
+class CommentStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +23,10 @@ class ArticleStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titre' => ['required'],
-            'image' => ['url'],
-            'contenu' => ['required','min:10'],
-            'date_publication' => ['date'],
-            'genre_id' => ['nullable'],
-            'editor_id' => ['required']
+            'commentaire' => ['required', 'string'],
+            'date_commentaire' => ['required'],
+            'user_id' => ['required'],
+            'lyrics_id' => ['required']
         ];
     }
-
 }

@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         // ! My set
         // \App\Models\Lyrics::factory(10)->create();
         // \App\Models\Artist::factory(10)->create();
-        \App\Models\Album::factory(10)->create();
+        // \App\Models\Album::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

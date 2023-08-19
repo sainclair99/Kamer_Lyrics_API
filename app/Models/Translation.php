@@ -35,7 +35,9 @@ class Translation extends Model
     use HasFactory;
     
     protected $fillable = [
-        'contenu'
+        'contenu',
+        'lyrics_id',
+        'user_id'
     ];
 
     public function lyrics() : BelongsTo {

@@ -38,7 +38,9 @@ class Message extends Model
 
     protected $fillable = [
         'contenu',
-        'date_envoi'
+        'date_envoi',
+        'user_id',
+        'subject_id'
     ];
 
     public function user() : BelongsTo {

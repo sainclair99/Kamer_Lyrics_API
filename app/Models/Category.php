@@ -36,6 +36,7 @@ class Category extends Model
 
     protected $fillable = [
         'libelle',
+        'editor_id'
     ];
 
     public function user() : BelongsTo {

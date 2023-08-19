@@ -44,7 +44,9 @@ class Article extends Model
         'titre',
         'image',
         'contenu',
-        'date_publication'
+        'date_publication',
+        'genre_id',
+        'editor_id'
     ];
 
     public function genre() : BelongsTo {

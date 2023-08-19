@@ -34,7 +34,7 @@ class Language extends Model
     ];
 
     // * Many to Many relationships
-    public function users() : BelongsToMany {
-        return $this->belongsToMany(User::class);
+    public function lyrics() : BelongsToMany {
+        return $this->belongsToMany(Lyrics::class);
     }
 }

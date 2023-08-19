@@ -32,7 +32,7 @@ class ArticleController extends Controller
         if ($article) {
             return response()->json([
                 'status' => 200,
-                'article' => $lyrics
+                'article' => $article
             ]);
         } else {
             return response()->json([
@@ -47,9 +47,9 @@ class ArticleController extends Controller
         $article = Article::create($request->validated());
         if ($article) {
             return response()->json([
-                'status' => 200,
+                'status' => 201,
                 'message' => 'Article added successfully'
-            ],200);
+            ],201);
         } else {
             return response()->json([
                 'status' => 500,
@@ -75,7 +75,7 @@ class ArticleController extends Controller
     }
     
     // * delete an article from the database
-    public function delete(Article $article){
+    public function destroy(Article $article){
         if ($article) {
             $article->delete();
             return response()->json([

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         // * ARTICLES table foreign keys added
         Schema::table('articles', function (Blueprint $table) {
-            $table->foreignId('genre_id')->references('id')->on('genres')->contrained();
+            $table->foreignId('genre_id')->nullable()->references('id')->on('genres')->contrained();
             $table->foreignId('editor_id')->references('id')->on('users')->contrained();
         });
 

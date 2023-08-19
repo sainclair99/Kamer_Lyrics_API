@@ -40,6 +40,7 @@ class Subject extends Model
     
     protected $fillable = [
         'libelle',
+        'user_id'
     ];
 
     public function messages() : HasMany {

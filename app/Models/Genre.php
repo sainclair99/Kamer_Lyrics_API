@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Lyrics;
 use App\Models\Article;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -45,5 +46,14 @@ class Genre extends Model
     // * Many to Many relationship
     public function lyrics() : BelongsToMany {
         return $this->belongsToMany(Lyrics::class);
+    }
+
+    // * scope functions
+    public function scopeWithArticles(Builder $query){
+        $query->with('articles');
+    }
+
+    public function scopeWithLyrics(Builder $query){
+        $query->with('lyrics');
     }
 }
