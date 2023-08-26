@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Artist;
+use App\Models\Follow;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
@@ -12,7 +13,7 @@ class ArtistController extends Controller
 {
     // * get all artists data
     public function index(SearchRequest $request){
-        $artists = Artist::with('lyrics');
+        $artists = Artist::withCount('lyrics')->with('lyrics')->with('albums')->withCount('followers')->with('alias');
 
         if($request->validated('nom')){
             $artists->where('nom', 'like', "%{$request->validated('nom')}%");
@@ -96,5 +97,28 @@ class ArtistController extends Controller
                 'message' => 'No such artist found!'
             ],404);
         }
+    }
+
+    // * 
+    public function follow($artist_id){
+        $artist = Artist::find($artist_id);
+        if (!$artist) {
+            return response()->json([
+                'message' => '404 Not found'
+            ],404);
+        }
+
+        // Unfollow an artist
+        if (Follow::whereArtistId($artist_id)->whereUserId(auth()->id())->delete()){
+            return response()->json([
+                'message' => 'Unfollowed'
+            ],200);
+        }
+    
+        // Follow an artist
+        Follow::create(['artist_id' => $artist_id, 'user_id' => auth()->id()]);
+        return response()->json([
+            'message' => 'Followed'
+        ],200);
     }
 }

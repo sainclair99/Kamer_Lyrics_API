@@ -33,6 +33,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Genre extends Model
 {
     use HasFactory;
+
+    protected $with = [
+        'lyrics'
+    ];
     
     protected $fillable = [
         'label'

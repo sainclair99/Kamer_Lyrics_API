@@ -36,7 +36,12 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/lyrics/{lyrics_id}/comments',[LyricsController::class,'getComments']); // * get all comments of specific lyrics with author 
     Route::put('/lyrics/{lyrics}',[LyricsController::class,'update'])->middleware(['auth:sanctum', 'admin']);
     Route::delete('/lyrics/{lyrics}',[LyricsController::class,'destroy'])->middleware(['auth:sanctum', 'admin']);
+    Route::get('/me', [AuthController::class, 'show']);
 
+    Route::post('/artists/{artist_id}/follow',[ArtistController::class,'follow']); // * Follow or Unfollow an artist
+
+    // * Protected Authentification ROUTES
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 // * Authentification ROUTES

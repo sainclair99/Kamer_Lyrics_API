@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\Album;
 use App\Models\Lyrics;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\Artist
@@ -47,10 +51,17 @@ class Artist extends Model
 
 
     public function alias() : BelongsTo {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function lyrics() : BelongsToMany {
         return $this->belongsToMany(Lyrics::class, 'authors');
+    }
+    // * ------------
+    public function followers() : BelongsToMany {
+        return $this->belongsToMany(User::class);
+    }
+    public function albums() : HasMany {
+        return $this->hasMany(Album::class);
     }
 }

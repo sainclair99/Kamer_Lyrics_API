@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Artist;
 use App\Models\Lyrics;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -30,10 +32,15 @@ class Album extends Model
     use HasFactory;
 
     protected $fillable = [
-        'libelle'
+        'libelle',
+        'artist_id'
     ];
 
     public function lyrics() : HasMany {
         return $this->hasMany(Lyrics::class);
+    }
+
+    Public function artist() : BelongsTo {
+        return $this.belongsTo(Artist::class);
     }
 }

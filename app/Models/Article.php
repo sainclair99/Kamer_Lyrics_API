@@ -40,6 +40,8 @@ class Article extends Model
 {
     use HasFactory;
 
+    protected $with = ['user'];
+
     protected $fillable = [
         'titre',
         'image',
@@ -54,6 +56,6 @@ class Article extends Model
     }
 
     public function user() : BelongsTo {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'editor_id');
     }
 }
