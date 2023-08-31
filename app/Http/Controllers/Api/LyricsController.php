@@ -50,18 +50,11 @@ class LyricsController extends Controller
 
     // * update existing lyrics 
     public function update(LyricsStoreRequest $request, Lyrics $lyrics){
-        // if ($lyrics) {
-            $lyrics->update($request->validated());
-            return response()->json([
-                'status' => 200,
-                'message' => 'Lyrics updated successfully'
-            ],200);
-        // } else {
-        //     return response()->json([
-        //         'status' => 404,
-        //         'message' => 'No such Lyrics found!'
-        //     ],404);
-        // }
+        $lyrics->update($request->validated());
+        return response()->json([
+            'status' => 200,
+            'message' => 'Lyrics updated successfully'
+        ],200);
     }
 
     // * delete a lyrics from the database
