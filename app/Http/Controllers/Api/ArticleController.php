@@ -12,34 +12,19 @@ class ArticleController extends Controller
     // * get all articles data
     public function index(){
         $articles = Article::all();
-        if ($articles->count() > 0) {
-            $data = [
-                'status' => 200,
-                'articles' => $articles,
-            ];
-            return response()->json($data, 200);
-        } else {
-            $data = [
-                'status' => 404,
-                'message' => 'No records found',
-            ];
-            return response()->json($data, 404);
-        }
+        $data = [
+            'status' => 200,
+            'articles' => $articles,
+        ];
+        return response()->json($data, 200);
     }
     
     // * get one specific article data
     public function show(Article $article){
-        if ($article) {
-            return response()->json([
-                'status' => 200,
-                'article' => $article
-            ]);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such article found'
-            ]);
-        }
+        return response()->json([
+            'status' => 200,
+            'article' => $article
+        ]);
     }
     
     // * add an article to the database
@@ -60,33 +45,19 @@ class ArticleController extends Controller
     
     // * update existing article 
     public function update(ArticleStoreRequest $request, Article $article){
-        if ($article) {
-            $article->update($request->validated());
-            return response()->json([
-                'status' => 200,
-                'message' => 'Article updated successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such article found!'
-            ],404);
-        }
+        $article->update($request->validated());
+        return response()->json([
+            'status' => 200,
+            'message' => 'Article updated successfully'
+        ],200);
     }
     
     // * delete an article from the database
     public function destroy(Article $article){
-        if ($article) {
-            $article->delete();
-            return response()->json([
-                'status' => 200,
-                'message' => 'Article deleted successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such article found!'
-            ],404);
-        }
+        $article->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Article deleted successfully'
+        ],200);
     }
 }

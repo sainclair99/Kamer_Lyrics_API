@@ -22,31 +22,13 @@ class ArtistController extends Controller
         if($request->validated('genre_musical')){
             $artists->where('genre_musical', 'like', "%{$request->validated('genre_musical')}%");
         }
-
-        $artists = $artists->get();
-
-        if ($artists->count() > 0) {
-            $data = $artists;
-            return response()->json($data, 200);
-        } else {
-            $data = [
-                'status' => 404,
-                'message' => 'No records founds'
-            ];
-            return response()->json($data, 404);
-        }
+        $data = $artists->get();
+        return response()->json($data, 200);
     }
     
     // * get a specific artist data
     public function show(Artist $artist){
-        if ($artist) {
-            return response()->json($artist,200);
-        }else{
-            return response()->json([
-                'status' => 404,
-                'message' => 'Element not found',
-            ],404);
-        }
+        return response()->json($artist,200);
     }
     
     // * store a new artist in the database
@@ -69,34 +51,20 @@ class ArtistController extends Controller
 
     // * update existing artist data informations
     public function update(ArtistStoreRequest $request, Artist $artist){
-        if ($artist) {
-            $artist->update($request->validated());
-            return response()->json([
-                'status' => 200,
-                'message' => 'artist updated successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such artist found!'
-            ],404);
-        }
+        $artist->update($request->validated());
+        return response()->json([
+            'status' => 200,
+            'message' => 'artist updated successfully'
+        ],200);
     }
 
     // * delete an artist data from the database
     public function destroy(Artist $artist){
-        if ($artist) {
-            $artist->delete();
-            return response()->json([
-                'status' => 200,
-                'message' => 'Artist deleted successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such artist found!'
-            ],404);
-        }
+        $artist->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Artist deleted successfully'
+        ],200);
     }
 
     // * 

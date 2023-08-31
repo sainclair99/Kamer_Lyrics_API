@@ -12,34 +12,19 @@ class RoleController extends Controller
     // * get all roles data
     public function index(){
         $roles = Role::all();
-        if ($roles->count() > 0) {
-            $data = [
-                'status' => 200,
-                'roles' => $roles,
-            ];
-            return response()->json($data, 200);
-        } else {
-            $data = [
-                'status' => 404,
-                'message' => 'No records found',
-            ];
-            return response()->json($data, 404);
-        }
+        $data = [
+            'status' => 200,
+            'roles' => $roles,
+        ];
+        return response()->json($data, 200);
     }
     
     // * get specific role data
     public function show(Role $role){
-        if ($role) {
-            return response()->json([
-                'status' => 200,
-                'role' => $role
-            ]);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such role found'
-            ]);
-        }
+        return response()->json([
+            'status' => 200,
+            'role' => $role
+        ]);
     }
     
     // * add a role to the database
@@ -60,33 +45,19 @@ class RoleController extends Controller
     
     // * update existing role data
     public function update(RoleStoreRequest $request, Role $role){
-        if ($role) {
-            $role->update($request->validated());
-            return response()->json([
-                'status' => 200,
-                'message' => 'Role updated successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such role found!'
-            ],404);
-        }
+        $role->update($request->validated());
+        return response()->json([
+            'status' => 200,
+            'message' => 'Role updated successfully'
+        ],200);
     }
 
     // * delete a role data from the database
     public function destroy(Role $role){
-        if ($role) {
-            $role->delete();
-            return response()->json([
-                'status' => 200,
-                'message' => 'Role deleted successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such role found!'
-            ],404);
-        }
+        $role->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Role deleted successfully'
+        ],200);
     }
 }

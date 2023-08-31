@@ -12,40 +12,24 @@ class CategoryController extends Controller
     // * get all categories data
     public function index(){
         $categories = Category::all();
-        if ($categories->count() > 0) {
-            $data = [
-                'status' => 200,
-                'categories' => $categories,
-            ];
-            return response()->json($data, 200);
-        } else {
-            $data = [
-                'status' => 404,
-                'message' => 'No records found',
-            ];
-            return response()->json($data, 404);
-        }
+        $data = [
+            'status' => 200,
+            'categories' => $categories,
+        ];
+        return response()->json($data, 200);
     }
 
     // * get specific category data
     public function show(Category $category){
-        if ($category) {
-            return response()->json([
-                'status' => 200,
-                'category' => $category
-            ]);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such category found'
-            ]);
-        }
+        return response()->json([
+            'status' => 200,
+            'category' => $category
+        ]);
     }
 
     // * add a category to the database
     public function store(CategoryStoreRequest $request){
         $category = Category::create($request->validated());
-        
         if (!$category) {
             $data = [
                 'status' => 500,
@@ -62,33 +46,19 @@ class CategoryController extends Controller
 
     // * update existing category
     public function update(CategoryStoreRequest $request, Category $category){
-        if ($category) {
-            $category->update($request->validated());
-            return response()->json([
-                'status' => 200,
-                'message' => 'Category updated successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such category found!'
-            ],404);
-        }
+        $category->update($request->validated());
+        return response()->json([
+            'status' => 200,
+            'message' => 'Category updated successfully'
+        ],200);
     }
 
     // * delete a category from the database
     public function destroy(Category $category){
-        if ($category) {
-            $category->delete();
-            return response()->json([
-                'status' => 200,
-                'message' => 'Category deleted successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such category found!'
-            ],404);
-        }
+        $category->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Category deleted successfully'
+        ],200);
     }
 }

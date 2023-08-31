@@ -23,32 +23,17 @@ class LyricsController extends Controller
         }
 
         $lyrics = $lyrics->get();
-
-        if ($lyrics->count() > 0) {
-            $data = $lyrics;
-            return response()->json($data, 200);
-        } else {
-            $data = [
-                'status' => 404,
-                'message' => 'No records found',
-            ];
-            return response()->json($data, 404);
-        }
+        
+        $data = $lyrics;
+        return response()->json($data, 200);
     }
 
     // * get a specific lyrics data
     public function show(Lyrics $lyrics){
-        if ($lyrics) {
-            return response()->json([
-                'status' => 200,
-                'lyrics' => $lyrics
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'element not found'
-            ],404);
-        }
+        return response()->json([
+            'status' => 200,
+            'lyrics' => $lyrics
+        ],200);
     }
 
     // * add a lyrics to the database
@@ -56,49 +41,36 @@ class LyricsController extends Controller
         $lyrics = auth()->user()->lyrics()->create($request->validated());
         $lyrics->genres()->sync($request->validated('genres'));
         $lyrics->languages()->sync($request->validated('languages'));
-        if ($lyrics) {
-            return response()->json([
-                'status' => 201,
-                'message' => 'Lyrics added successfully'
-            ],201);
-        } else {
-            return response()->json([
-                'status' => 500,
-                'message' => 'Somethings went wrong'
-            ],500);
-        }
+        
+        return response()->json([
+            'status' => 201,
+            'message' => 'Lyrics added successfully'
+        ],201);
     }
 
     // * update existing lyrics 
     public function update(LyricsStoreRequest $request, Lyrics $lyrics){
-        if ($lyrics) {
+        // if ($lyrics) {
             $lyrics->update($request->validated());
             return response()->json([
                 'status' => 200,
                 'message' => 'Lyrics updated successfully'
             ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such Lyrics found!'
-            ],404);
-        }
+        // } else {
+        //     return response()->json([
+        //         'status' => 404,
+        //         'message' => 'No such Lyrics found!'
+        //     ],404);
+        // }
     }
 
     // * delete a lyrics from the database
     public function destroy(Lyrics $lyrics){
-        if ($lyrics) {
-            $lyrics->delete();
-            return response()->json([
-                'status' => 200,
-                'message' => 'Lyrics deleted successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such Lyrics found!'
-            ],404);
-        }
+        $lyrics->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Lyrics deleted successfully'
+        ],200);
     }
 
     // * like a specific lyrics
@@ -118,10 +90,12 @@ class LyricsController extends Controller
         }
     
         // Like a lyrics
-        Like::create(['lyrics_id' => $lyrics_id, 'user_id' => auth()->id()]);
+        $like = Like::create(['lyrics_id' => $lyrics_id, 'user_id' => auth()->id()]);
+
         return response()->json([
-            'message' => 'Liked'
-        ],200);
+            'status' => 201,
+            'like' => $like,
+        ],201);
     }
 
     // * comment a specific lyrics
@@ -139,7 +113,8 @@ class LyricsController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'success'
+            'status' => 201,
+            'comment' => $comment,
         ], 201);
     }
 
@@ -147,7 +122,7 @@ class LyricsController extends Controller
     public function getComments($lyrics_id){
         $comments = Comment::with('lyrics')->with('user')->where('lyrics_id', $lyrics_id)->latest()->get();
 
-        if ($comments->count() <= 0) {
+        if (!$comments) {
             return response()->json([
                 'message' => '404 Not found'
             ], 404);

@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         // ! My set
-        // \App\Models\Lyrics::factory(10)->create();
+        \App\Models\Lyrics::factory(10)->create();
         // \App\Models\Artist::factory(10)->create();
         // \App\Models\Album::factory(10)->create();
 

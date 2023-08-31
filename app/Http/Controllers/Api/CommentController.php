@@ -12,34 +12,19 @@ class CommentController extends Controller
     // * get all comments data
     public function index(){
         $comments = Comment::with('user')->with('lyrics')->get();
-        if ($comments->count() > 0) {
-            $data = [
-                'status' => 200,
-                'comments' => $comments,
-            ];
-            return response()->json($data, 200);
-        } else {
-            $data = [
-                'status' => 404,
-                'message' => 'No records found',
-            ];
-            return response()->json($data, 404);
-        }
+        $data = [
+            'status' => 200,
+            'comments' => $comments,
+        ];
+        return response()->json($data, 200);
     }
 
     // * get specific comment data
     public function show(Comment $comment){
-        if ($comment) {
-            return response()->json([
-                'status' => 200,
-                'comment' => $comment
-            ]);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such comment found'
-            ]);
-        }
+        return response()->json([
+            'status' => 200,
+            'comment' => $comment
+        ]);
     }
 
     // * add a comment to the database
@@ -60,33 +45,19 @@ class CommentController extends Controller
 
     // * update existing comment
     public function update(CommentStoreRequest $request, Comment $comment){
-        if ($comment) {
-            $comment->update($request->validated());
-            return response()->json([
-                'status' => 200,
-                'message' => 'Comment updated successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such comment found!'
-            ],404);
-        }
+        $comment->update($request->validated());
+        return response()->json([
+            'status' => 200,
+            'message' => 'Comment updated successfully'
+        ],200);
     }
 
     // * delete a category from the database
     public function destroy(Comment $comment){
-        if ($comment) {
-            $comment->delete();
-            return response()->json([
-                'status' => 200,
-                'message' => 'Comment deleted successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such comment found!'
-            ],404);
-        }
+        $comment->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Comment deleted successfully'
+        ],200);
     }
 }

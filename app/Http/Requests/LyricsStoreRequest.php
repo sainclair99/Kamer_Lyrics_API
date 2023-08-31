@@ -28,7 +28,26 @@ class LyricsStoreRequest extends FormRequest
             'contenu' => ['required', 'min:10'],
             'date_sortie' => ['nullable','date', 'date_format:dd-mm-yy'],
             'video' => ['url'],
+            'image' => ['mimes:png,jpg,jpeg,gif']
             // 'album_id' => ['required']
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'status.required' => 'status is required',
+            'verifier.boolean' => 'verifier most be a boolean',
+            'titre.required' => 'titre is required',
+            'contenu.required' => 'contenu is required',
+            'date_sortie.date' => 'date_sortie most be a date',
+            'video.url' => 'url'
+        ];
+    }
+
 }

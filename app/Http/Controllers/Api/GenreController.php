@@ -12,34 +12,19 @@ class GenreController extends Controller
     // * get all genres data
     public function index(){
         $genres = Genre::withArticles()->withLyrics()->get();
-        if ($genres->count() > 0) {
-            $data = [
-                'status' => 200,
-                'genres' => $genres,
-            ];
-            return response()->json($data, 200);
-        } else {
-            $data = [
-                'status' => 404,
-                'message' => 'No records found',
-            ];
-            return response()->json($data, 404);
-        }
+        $data = [
+            'status' => 200,
+            'genres' => $genres,
+        ];
+        return response()->json($data, 200);
     }
     
     // * get specific genre data
     public function show(Genre $genre){
-        if ($genre) {
-            return response()->json([
-                'status' => 200,
-                'genre' => $genre
-            ]);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such genre found'
-            ]);
-        }
+        return response()->json([
+            'status' => 200,
+            'genre' => $genre
+        ]);
     }
 
     // * add a genre to the database
@@ -60,33 +45,19 @@ class GenreController extends Controller
 
     // * update existing genre
     public function update(GenreStoreRequest $request, Genre $genre){
-        if ($genre) {
-            $genre->update($request->validated());
-            return response()->json([
-                'status' => 200,
-                'message' => 'Genre updated successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such genre found!'
-            ],404);
-        }
+        $genre->update($request->validated());
+        return response()->json([
+            'status' => 200,
+            'message' => 'Genre updated successfully'
+        ],200);
     }
 
     // * delete a genre from the database
     public function destroy(Genre $genre){
-        if ($genre) {
-            $genre->delete();
-            return response()->json([
-                'status' => 200,
-                'message' => 'Genre deleted successfully'
-            ],200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No such genre found!'
-            ],404);
-        }
+        $genre->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Genre deleted successfully'
+        ],200);
     }
 }
